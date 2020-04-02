@@ -131,3 +131,20 @@ services:
       - monitor-net
     labels:
       org.label-schema.group: "monitoring"
+
+  blackbox:
+    image: prom/blackbox-exporter:master
+    container_name: blackbox
+    volumes:
+      - ./blackbox/:/etc/blackboxexporter/
+    command:
+      - '--config.file=etc/blackboxexporter/blackbox.yml'
+    dns: 8.8.8.8
+    restart: unless-stopped
+    expose:
+      - 9115
+    networks:
+      - monitor-net
+    labels:
+      org.label-schema.group: "monitoring"
+
